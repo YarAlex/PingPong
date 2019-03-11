@@ -13,16 +13,21 @@ public class MainWindow extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        Pane root = new Pane();
-        Platform platform = new Platform();
-        platform.draw(root);
-        Scene scene = new Scene(root);
-
-        primaryStage.setScene(scene);
         primaryStage.setWidth(WINDOW_WIDTH);
         primaryStage.setHeight(WINDOW_HEIGHT);
 
+        Pane root = new Pane();
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
         primaryStage.show();
+
+        KeyHandler keyHandler = new KeyHandler();
+        scene.setOnKeyPressed(keyHandler.getKeyPressed());
+        scene.setOnKeyReleased(keyHandler.getKeyReleased());
+
+        Platform platform = new Platform();
+        keyHandler.setPlatform(platform);
+        platform.draw(root);
     }
 
     public void show() {

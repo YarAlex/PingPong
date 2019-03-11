@@ -12,20 +12,24 @@ public class Platform extends AbstractElement {
 
     private Pane parent;
     private Timeline timeline = new Timeline();
-    private Integer MOVE_TIME = 500;
+    private double SPEED = 0.5;
 
     public void moveRight() {
+        double space = parent.getWidth() - shape.getWidth() - shape.getTranslateX();
+        double time = space / SPEED;
         timeline.getKeyFrames().clear();
-        KeyValue keyValue = new KeyValue(shape.translateXProperty(), parent.getWidth()-shape.getWidth());
-        KeyFrame keyFrame = new KeyFrame(Duration.millis(MOVE_TIME), keyValue);
+        KeyValue keyValue = new KeyValue(shape.translateXProperty(), parent.getWidth() - shape.getWidth());
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(time), keyValue);
         timeline.getKeyFrames().add(keyFrame);
         timeline.play();
     }
 
     public void moveLeft() {
+        double space = shape.getTranslateX();
+        double time = space / SPEED;
         timeline.getKeyFrames().clear();
         KeyValue keyValue = new KeyValue(shape.translateXProperty(), 0);
-        KeyFrame keyFrame = new KeyFrame(Duration.millis(MOVE_TIME), keyValue);
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(time), keyValue);
         timeline.getKeyFrames().add(keyFrame);
         timeline.play();
     }
@@ -39,23 +43,17 @@ public class Platform extends AbstractElement {
         Polygon polygon_1 = new Polygon();
         polygon_1.getPoints().addAll(0.0, 0.0,
                 0.0, 10.0,
-                10.0, 10.0,
-                10.0, 0.);
+                50.0, 10.0,
+                50.0, 0.);
         polygon_1.setFill(Color.RED);
 
-        Polygon polygon_2 = new Polygon();
-        polygon_2.getPoints().addAll(0.0, 15.0,
-                0.0, 25.0,
-                10.0, 25.0,
-                10.0, 15.0);
-        polygon_2.setFill(Color.GREEN);
-
-        shape.getChildren().addAll(polygon_1, polygon_2);
+        shape.getChildren().addAll(polygon_1);
         if (parent instanceof Pane) {
             this.parent = (Pane) parent;
         }
         if (this.parent != null) {
             this.parent.getChildren().add(shape);
         }
+        setPosition((this.parent.getWidth() - 50) / 2, this.parent.getHeight() - 10);
     }
 }
