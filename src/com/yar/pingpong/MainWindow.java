@@ -25,9 +25,9 @@ public class MainWindow extends Application {
         scene.setOnKeyPressed(keyHandler.getKeyPressed());
         scene.setOnKeyReleased(keyHandler.getKeyReleased());
 
-        Platform platform = new Platform();
+        Platform platform = new Platform(root);
         keyHandler.setPlatform(platform);
-        platform.draw(root);
+        platform.draw();
     }
 
     public void show() {

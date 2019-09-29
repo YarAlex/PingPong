@@ -16,7 +16,7 @@ public interface Element {
 
     public void setPosition(Double x, Double y);
 
-    public void draw(Object parent);
+    public void draw();
 
     /*public Drawing getShape();
 

@@ -14,6 +14,11 @@ public class Platform extends AbstractElement {
     private Timeline timeline = new Timeline();
     private double SPEED = 0.5;
 
+    public Platform(Pane parent) {
+        this.parent = parent;
+        this.parent.getChildren().add(shape);
+    }
+
     public void moveRight() {
         double space = parent.getWidth() - shape.getWidth() - shape.getTranslateX();
         double time = space / SPEED;
@@ -39,7 +44,7 @@ public class Platform extends AbstractElement {
     }
 
     @Override
-    public void draw(Object parent) {
+    public void draw() {
         Polygon polygon_1 = new Polygon();
         polygon_1.getPoints().addAll(0.0, 0.0,
                 0.0, 10.0,
@@ -48,12 +53,6 @@ public class Platform extends AbstractElement {
         polygon_1.setFill(Color.RED);
 
         shape.getChildren().addAll(polygon_1);
-        if (parent instanceof Pane) {
-            this.parent = (Pane) parent;
-        }
-        if (this.parent != null) {
-            this.parent.getChildren().add(shape);
-        }
-        setPosition((this.parent.getWidth() - 50) / 2, this.parent.getHeight() - 10);
+        setPosition((shape.getScene().getWindow().getWidth() - 50) / 2, shape.getScene().getWindow().getHeight() - 100.0);
     }
 }
