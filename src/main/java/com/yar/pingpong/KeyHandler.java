@@ -1,16 +1,16 @@
 package com.yar.pingpong;
 
 import javafx.event.EventHandler;
-import javafx.event.EventType;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+
 
 public class KeyHandler{
+
+    private static final Logger log = org.apache.log4j.Logger.getLogger(KeyHandler.class);
 
     private static KeyHandler instance;
     private List<KeyHandlerEvent> events = new ArrayList<>();
@@ -32,7 +32,7 @@ public class KeyHandler{
     }
 
     public void process (KeyEvent event) {
-        System.out.println("Code="+event.getCode()+" / type="+event.getEventType());
+        log.debug("Key = "+event.getCode()+", eventType = "+event.getEventType());
         for (KeyHandlerEvent keyHandlerEvent : events) {
             keyHandlerEvent.onKeyEvent(event);
         }
