@@ -1,58 +1,45 @@
 package com.yar.pingpong;
 
-import com.yar.pingpong.element.Platform;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class KeyHandler{
 
-    private Map<KeyCode, EventType<KeyEvent>> keyMap = new ConcurrentHashMap<>();
+    private static KeyHandler instance;
+    private List<KeyHandlerEvent> events = new ArrayList<>();
+    public static final String KEY_PRESSED = "KEY_PRESSED";
+    public static final String KEY_RELEASED = "KEY_RELEASED";
 
-    private String KEY_PRESSED = "KEY_PRESSED";
-    private String KEY_RELEASED = "KEY_RELEASED";
-    private Platform platform;
+    private EventHandler<KeyEvent> keyPressed = event -> process(event);
+    private EventHandler<KeyEvent> keyReleased = event -> process(event);
 
-    private EventHandler<KeyEvent> keyPressed = new EventHandler<KeyEvent>() {
-        @Override
-        public void handle(KeyEvent event) {
-            System.out.println("Code="+event.getCode()+" / type="+event.getEventType());
-            if (!event.getEventType().equals(keyMap.get(event.getCode()))) {
-                keyMap.put(event.getCode(), event.getEventType());
-                KeyHandler.this.process(event);
-            }
+    private KeyHandler(){
+
+    }
+
+    public static KeyHandler getInstance() {
+        if (instance == null) {
+            instance = new KeyHandler();
         }
-    };
-
-    private EventHandler<KeyEvent> keyReleased = new EventHandler<KeyEvent>() {
-        @Override
-        public void handle(KeyEvent event) {
-            System.out.println("Code="+event.getCode()+" / type="+event.getEventType());
-            keyMap.put(event.getCode(), event.getEventType());
-            KeyHandler.this.process(event);
-        }
-    };
+        return instance;
+    }
 
     public void process (KeyEvent event) {
-        if (platform == null) {
-            return;
+        System.out.println("Code="+event.getCode()+" / type="+event.getEventType());
+        for (KeyHandlerEvent keyHandlerEvent : events) {
+            keyHandlerEvent.onKeyEvent(event);
         }
-        if (event.getEventType().toString().equals(KEY_RELEASED)) {
-            platform.stopMove();
-            return;
-        }
-        switch (event.getCode()) {
-            case LEFT:
-                platform.moveLeft();
-                break;
-            case RIGHT:
-                platform.moveRight();
-                break;
-        }
+    }
+
+    public void addKeyHandlerEvent(KeyHandlerEvent keyHandlerEvent) {
+        events.add(keyHandlerEvent);
     }
 
     public EventHandler<KeyEvent> getKeyPressed() {
@@ -61,9 +48,5 @@ public class KeyHandler{
 
     public EventHandler<KeyEvent> getKeyReleased() {
         return keyReleased;
-    }
-
-    public void setPlatform(Platform platform) {
-        this.platform = platform;
     }
 }

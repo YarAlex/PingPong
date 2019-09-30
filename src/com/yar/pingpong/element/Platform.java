@@ -1,8 +1,11 @@
 package com.yar.pingpong.element;
 
+import com.yar.pingpong.KeyHandler;
+import com.yar.pingpong.KeyHandlerEvent;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
@@ -17,9 +20,26 @@ public class Platform extends AbstractElement {
     public Platform(Pane parent) {
         this.parent = parent;
         this.parent.getChildren().add(shape);
+
+        KeyHandler.getInstance().addKeyHandlerEvent(event -> processKey(event));
     }
 
-    public void moveRight() {
+    private void processKey(KeyEvent event) {
+        if (event.getEventType().toString().equals(KeyHandler.KEY_RELEASED)) {
+            stopMove();
+            return;
+        }
+        switch (event.getCode()) {
+            case LEFT:
+                moveLeft();
+                break;
+            case RIGHT:
+                moveRight();
+                break;
+        }
+    }
+
+    private void moveRight() {
         double space = parent.getWidth() - shape.getWidth() - shape.getTranslateX();
         double time = space / SPEED;
         timeline.getKeyFrames().clear();
@@ -29,7 +49,7 @@ public class Platform extends AbstractElement {
         timeline.play();
     }
 
-    public void moveLeft() {
+    private void moveLeft() {
         double space = shape.getTranslateX();
         double time = space / SPEED;
         timeline.getKeyFrames().clear();

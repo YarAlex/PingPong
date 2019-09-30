@@ -21,12 +21,10 @@ public class MainWindow extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        KeyHandler keyHandler = new KeyHandler();
-        scene.setOnKeyPressed(keyHandler.getKeyPressed());
-        scene.setOnKeyReleased(keyHandler.getKeyReleased());
+        scene.setOnKeyPressed(KeyHandler.getInstance().getKeyPressed());
+        scene.setOnKeyReleased(KeyHandler.getInstance().getKeyReleased());
 
         Platform platform = new Platform(root);
-        keyHandler.setPlatform(platform);
         platform.draw();
     }
 
