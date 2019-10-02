@@ -3,11 +3,9 @@ package com.yar.pingpong.element;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
-import org.apache.log4j.Logger;
 
 public class Ball extends AbstractElement {
 
@@ -17,9 +15,8 @@ public class Ball extends AbstractElement {
     private double directionX = 0;
     private double directionY = 1;
 
-    public Ball(Pane parent) {
+    public Ball(Element parent) {
         super(parent);
-        log = Logger.getLogger(Ball.class.getSimpleName());
     }
 
     public void fly(double destinationX, double destinationY) {
@@ -47,11 +44,9 @@ public class Ball extends AbstractElement {
     }
 
     @Override
-    public void draw() {
+    protected void drawInit() {
         Circle circle = new Circle(0, 0, 7);
         circle.setFill(Color.BLUE);
-
         shape.getChildren().addAll(circle);
-        shape.autosize();
     }
 }

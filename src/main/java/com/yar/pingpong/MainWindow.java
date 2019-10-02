@@ -3,9 +3,9 @@ package com.yar.pingpong;
 import com.yar.pingpong.element.Ball;
 import com.yar.pingpong.element.Platform;
 import com.yar.pingpong.element.RectangularWall;
+import com.yar.pingpong.element.Root;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.apache.log4j.Logger;
 
@@ -20,8 +20,8 @@ public class MainWindow extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        Pane root = new Pane();
-        Scene scene = new Scene(root);
+        Root root = new Root(null);
+        Scene scene = new Scene(root.getShape());
         scene.setOnKeyPressed(KeyHandler.getInstance().getKeyPressed());
         scene.setOnKeyReleased(KeyHandler.getInstance().getKeyReleased());
         primaryStage.setScene(scene);
@@ -30,6 +30,7 @@ public class MainWindow extends Application {
 
         Platform platform = new Platform(root);
         platform.draw();
+        platform.setPosition((WINDOW_WIDTH - 50) / 2, WINDOW_HEIGHT - 50.0);
 
         Ball ball = new Ball(root);
         ball.draw();
@@ -37,6 +38,7 @@ public class MainWindow extends Application {
 
         RectangularWall rectangularWall = new RectangularWall(root, 1);
         rectangularWall.draw();
+        rectangularWall.moveToCenter();
 
         gameHandler = new GameHandler();
         gameHandler.setBall(ball);

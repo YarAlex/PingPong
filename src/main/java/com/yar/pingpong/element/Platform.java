@@ -5,7 +5,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.util.Duration;
@@ -16,7 +15,7 @@ public class Platform extends AbstractElement {
     private double SPEED = 0.5;
     private boolean moving = false;
 
-    public Platform(Pane parent) {
+    public Platform(Element parent) {
         super(parent);
         KeyHandler.getInstance().addKeyHandlerEvent(event -> processKey(event));
     }
@@ -70,16 +69,13 @@ public class Platform extends AbstractElement {
     }
 
     @Override
-    public void draw() {
+    protected void drawInit() {
         Polygon polygon_1 = new Polygon();
         polygon_1.getPoints().addAll(0.0, 0.0,
                 0.0, 10.0,
                 50.0, 10.0,
                 50.0, 0.);
         polygon_1.setFill(Color.RED);
-
         shape.getChildren().addAll(polygon_1);
-        shape.autosize();
-        setPosition((shape.getScene().getWindow().getWidth() - 50) / 2, shape.getScene().getWindow().getHeight() - 50.0);
     }
 }

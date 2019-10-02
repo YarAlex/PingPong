@@ -2,9 +2,9 @@ package com.yar.pingpong;
 
 import com.yar.pingpong.element.AbstractWall;
 import com.yar.pingpong.element.Ball;
+import com.yar.pingpong.element.Element;
 import com.yar.pingpong.element.Platform;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Pane;
 import org.apache.log4j.Logger;
 
 import java.util.Collections;
@@ -15,7 +15,7 @@ public class GameHandler {
 
     private Platform platform;
     private Ball ball;
-    private Pane room;
+    private Element room;
     private AbstractWall wall;
     boolean stop = false;
 
@@ -39,15 +39,13 @@ public class GameHandler {
     public void process() {
         while (!stop) {
             ball.calculateMatrix();
-            wall.calculateMatrix();
             log.debug("Wall matrix size = "+wall.getMatrix().size());
             if (!Collections.disjoint(wall.getMatrix(), ball.getMatrix())) {
-                log.info("Cross, ball coordinate :" +ball.getMatrix());
-                log.info("Cross, wall coordinate :" +wall.getMatrix());
+                log.debug("Cross, ball coordinate :" +ball.getMatrix());
+                log.debug("Cross, wall coordinate :" +wall.getMatrix());
                 ball.stopFly();
                 stopped();
             }
-            //stopped();
         }
 
     }
@@ -72,11 +70,11 @@ public class GameHandler {
         this.ball = ball;
     }
 
-    public Pane getRoom() {
+    public Element getRoom() {
         return room;
     }
 
-    public void setRoom(Pane room) {
+    public void setRoom(Element room) {
         this.room = room;
     }
 

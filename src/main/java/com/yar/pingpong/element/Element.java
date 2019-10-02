@@ -1,32 +1,31 @@
 package com.yar.pingpong.element;
 
+import javafx.scene.layout.Pane;
+
 public interface Element {
 
-    public int getPositionX();
+    void draw();
 
-    public void setPositionX(int x);
+    void addChild(Element child);
 
-    public int getPositionY();
+    int getPositionX();
 
-    public void setPositionY(int y);
+    void setPositionX(int x);
 
-    public void show();
+    int getPositionY();
 
-    public void hide();
+    void setPositionY(int y);
 
-    public void setPosition(double x, double y);
+    void setPosition(double x, double y);
 
-    public void draw();
+    double getWidth();
 
-    public double getWidth();
+    double getHeight();
 
-    public double getHeight();
+    Pane getShape();
 
-    /*public Drawing getShape();
+    void show();
 
-    public void setShape(Drawing shape);
+    void hide();
 
-    public void setParent(element parent);
-
-    public element getParent();*/
 }
