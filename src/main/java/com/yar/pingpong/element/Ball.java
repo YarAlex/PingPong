@@ -37,16 +37,31 @@ public class Ball extends AbstractElement {
         timeline.getKeyFrames().add(keyFrameY);
         timeline.getKeyFrames().add(keyFrameX);
         timeline.play();
+
+        fly = true;
     }
 
     public void stopFly() {
         timeline.stop();
+        fly = false;
+    }
+
+    public void pauseFly() {
+        timeline.pause();
+    }
+
+    public void continueFly() {
+        timeline.play();
     }
 
     @Override
     protected void drawInit() {
-        Circle circle = new Circle(0, 0, 7);
+        Circle circle = new Circle(0, 0, 6);
         circle.setFill(Color.BLUE);
         shape.getChildren().addAll(circle);
+    }
+
+    public boolean isFly() {
+        return fly;
     }
 }

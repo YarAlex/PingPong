@@ -1,5 +1,6 @@
 package com.yar.pingpong.element;
 
+import javafx.geometry.Bounds;
 import javafx.scene.layout.Pane;
 
 public interface Element {
@@ -28,4 +29,5 @@ public interface Element {
 
     void hide();
 
+    Bounds getBounds();
 }

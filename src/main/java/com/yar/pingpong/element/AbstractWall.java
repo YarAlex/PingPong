@@ -14,18 +14,6 @@ public abstract class AbstractWall extends AbstractElement implements Wall{
         this.countBricks = countBricks;
     }
 
-    @Override
-    public void calculateMatrix() {
-        log.debug("Calculate matrix");
-        matrix.clear();
-        for (final Brick brick : bricks) {
-            new Thread(() -> {
-                brick.calculateMatrix();
-                matrix.addAll(brick.getMatrix());
-            }).start();
-        }
-    }
-
     public List<Brick> getBricks() {
         return bricks;
     }

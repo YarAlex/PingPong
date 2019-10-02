@@ -1,23 +1,24 @@
 package com.yar.pingpong.element;
 
+import javafx.geometry.Bounds;
 import javafx.scene.layout.Pane;
 import org.apache.log4j.Logger;
-
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class AbstractElement implements Element {
 
     protected Logger log = Logger.getLogger(getClass().getSimpleName());
     protected Pane shape = new Pane();
     protected Element parent;
-    protected List<Coordinate> matrix = new CopyOnWriteArrayList<>();
 
     public AbstractElement(Element parent) {
         this.parent = parent;
         if (parent != null) {
             this.parent.addChild(this);
         }
+    }
+
+    public Bounds getBounds() {
+        return parent.getShape().localToParent(shape.getBoundsInParent());
     }
 
     @Override
@@ -34,21 +35,6 @@ public abstract class AbstractElement implements Element {
 
     abstract void drawInit();
 
-    public void calculateMatrix() {
-        log.debug("Calculate matrix");
-        matrix.clear();
-        for (int c = 0; c < getWidth(); c++) {
-            int x = getAbsolutePositionX() + c;
-            for (int cc = 0; cc < getHeight(); cc++) {
-                int y = getAbsolutePositionY() + cc;
-                Coordinate coordinate = new Coordinate(x, y);
-                log.trace("Coordinate: "+coordinate);
-                matrix.add(coordinate);
-            }
-        }
-        log.debug("Matrix size = " + matrix.size());
-    }
-
     protected int getAbsolutePositionX() {
         int ret = getPositionX();
         if (parent != null) {
@@ -63,13 +49,6 @@ public abstract class AbstractElement implements Element {
             ret += ((AbstractElement)parent).getAbsolutePositionY();
         }
         return ret;
-    }
-
-    public List<Coordinate> getMatrix() {
-        if (matrix.isEmpty()) {
-            calculateMatrix();
-        }
-        return matrix;
     }
 
     @Override

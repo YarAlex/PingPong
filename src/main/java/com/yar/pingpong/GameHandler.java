@@ -1,13 +1,8 @@
 package com.yar.pingpong;
 
-import com.yar.pingpong.element.AbstractWall;
-import com.yar.pingpong.element.Ball;
-import com.yar.pingpong.element.Element;
-import com.yar.pingpong.element.Platform;
+import com.yar.pingpong.element.*;
 import javafx.scene.input.KeyEvent;
 import org.apache.log4j.Logger;
-
-import java.util.Collections;
 
 public class GameHandler {
 
@@ -38,16 +33,15 @@ public class GameHandler {
 
     public void process() {
         while (!stop) {
-            ball.calculateMatrix();
-            log.debug("Wall matrix size = "+wall.getMatrix().size());
-            if (!Collections.disjoint(wall.getMatrix(), ball.getMatrix())) {
-                log.debug("Cross, ball coordinate :" +ball.getMatrix());
-                log.debug("Cross, wall coordinate :" +wall.getMatrix());
-                ball.stopFly();
-                stopped();
+            for (Brick brick : wall.getBricks()) {=
+                if (ball.getBounds().intersects(brick.getBounds())) {
+                    ball.stopFly();
+                    stopped();
+                    log.debug("Intersects with ball, bounds:"+ball.getBounds());
+                    log.debug("Wall bounds: "+brick.getBounds());
+                }
             }
         }
-
     }
 
     public void stopped() {
