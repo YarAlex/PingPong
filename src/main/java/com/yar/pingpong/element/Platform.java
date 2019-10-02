@@ -1,7 +1,6 @@
 package com.yar.pingpong.element;
 
 import com.yar.pingpong.KeyHandler;
-import com.yar.pingpong.KeyHandlerEvent;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -13,14 +12,12 @@ import javafx.util.Duration;
 
 public class Platform extends AbstractElement {
 
-    private Pane parent;
     private Timeline timeline = new Timeline();
     private double SPEED = 0.5;
+    private boolean moving = false;
 
     public Platform(Pane parent) {
-        this.parent = parent;
-        this.parent.getChildren().add(shape);
-
+        super(parent);
         KeyHandler.getInstance().addKeyHandlerEvent(event -> processKey(event));
     }
 
@@ -40,20 +37,28 @@ public class Platform extends AbstractElement {
     }
 
     private void moveRight() {
-        double space = parent.getWidth() - shape.getWidth() - shape.getTranslateX();
+        if (moving) {
+            return;
+        }
+        moving = true;
+        double space = parent.getWidth() - getWidth() - shape.getLayoutX();
         double time = space / SPEED;
         timeline.getKeyFrames().clear();
-        KeyValue keyValue = new KeyValue(shape.translateXProperty(), parent.getWidth() - shape.getWidth());
+        KeyValue keyValue = new KeyValue(shape.layoutXProperty(), parent.getWidth() - getWidth());
         KeyFrame keyFrame = new KeyFrame(Duration.millis(time), keyValue);
         timeline.getKeyFrames().add(keyFrame);
         timeline.play();
     }
 
     private void moveLeft() {
-        double space = shape.getTranslateX();
+        if (moving) {
+            return;
+        }
+        moving = true;
+        double space = shape.getLayoutX();
         double time = space / SPEED;
         timeline.getKeyFrames().clear();
-        KeyValue keyValue = new KeyValue(shape.translateXProperty(), 0);
+        KeyValue keyValue = new KeyValue(shape.layoutXProperty(), 0);
         KeyFrame keyFrame = new KeyFrame(Duration.millis(time), keyValue);
         timeline.getKeyFrames().add(keyFrame);
         timeline.play();
@@ -61,6 +66,7 @@ public class Platform extends AbstractElement {
 
     public void stopMove() {
         timeline.stop();
+        moving = false;
     }
 
     @Override
@@ -73,6 +79,7 @@ public class Platform extends AbstractElement {
         polygon_1.setFill(Color.RED);
 
         shape.getChildren().addAll(polygon_1);
-        setPosition((shape.getScene().getWindow().getWidth() - 50) / 2, shape.getScene().getWindow().getHeight() - 100.0);
+        shape.autosize();
+        setPosition((shape.getScene().getWindow().getWidth() - 50) / 2, shape.getScene().getWindow().getHeight() - 50.0);
     }
 }

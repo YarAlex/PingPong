@@ -2,21 +2,25 @@ package com.yar.pingpong.element;
 
 public interface Element {
 
-    public Double getPositionX();
+    public int getPositionX();
 
-    public void setPositionX(Double x);
+    public void setPositionX(int x);
 
-    public Double getPositionY();
+    public int getPositionY();
 
-    public void setPositionY(Double y);
+    public void setPositionY(int y);
 
     public void show();
 
     public void hide();
 
-    public void setPosition(Double x, Double y);
+    public void setPosition(double x, double y);
 
     public void draw();
+
+    public double getWidth();
+
+    public double getHeight();
 
     /*public Drawing getShape();
 

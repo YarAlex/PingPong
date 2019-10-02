@@ -10,7 +10,7 @@ import java.util.List;
 
 public class KeyHandler{
 
-    private static final Logger log = org.apache.log4j.Logger.getLogger(KeyHandler.class);
+    private static final Logger log = org.apache.log4j.Logger.getLogger(KeyHandler.class.getSimpleName());
 
     private static KeyHandler instance;
     private List<KeyHandlerEvent> events = new ArrayList<>();
@@ -31,8 +31,8 @@ public class KeyHandler{
         return instance;
     }
 
-    public void process (KeyEvent event) {
-        log.debug("Key = "+event.getCode()+", eventType = "+event.getEventType());
+    private void process (KeyEvent event) {
+        log.trace("Key = "+event.getCode()+", eventType = "+event.getEventType());
         for (KeyHandlerEvent keyHandlerEvent : events) {
             keyHandlerEvent.onKeyEvent(event);
         }
