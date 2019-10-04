@@ -4,7 +4,7 @@ public class Root extends AbstractElement {
 
 
     public Root(Element parent) {
-        super(parent);
+        super(null);
     }
 
     @Override

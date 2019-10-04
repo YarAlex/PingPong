@@ -9,25 +9,21 @@ public interface Element {
 
     void addChild(Element child);
 
-    int getPositionX();
+    Pane getShape();
 
-    void setPositionX(int x);
+    Bounds getBounds();
 
-    int getPositionY();
+    double getPositionX();
 
-    void setPositionY(int y);
+    double getPositionY();
 
-    void setPosition(double x, double y);
+    void setPosition(Double x, Double y);
 
     double getWidth();
 
     double getHeight();
 
-    Pane getShape();
-
     void show();
 
     void hide();
-
-    Bounds getBounds();
 }

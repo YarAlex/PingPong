@@ -17,15 +17,6 @@ public abstract class AbstractElement implements Element {
         }
     }
 
-    public Bounds getBounds() {
-        return parent.getShape().localToParent(shape.getBoundsInParent());
-    }
-
-    @Override
-    public void addChild(Element child) {
-        shape.getChildren().addAll(child.getShape());
-    }
-
     @Override
     public void draw() {
         log.debug("Start draw "+getClass().getSimpleName());
@@ -33,67 +24,54 @@ public abstract class AbstractElement implements Element {
         shape.autosize();
     }
 
-    abstract void drawInit();
+    @Override
+    public void addChild(Element child) {
+        shape.getChildren().addAll(child.getShape());
+    }
 
-    protected int getAbsolutePositionX() {
-        int ret = getPositionX();
-        if (parent != null) {
-            ret += ((AbstractElement)parent).getAbsolutePositionX();
+    public Bounds getBounds() {
+        return parent.getShape().localToParent(shape.getBoundsInParent());
+    }
+
+    @Override
+    public Pane getShape() {
+        return shape;
+    }
+
+    @Override
+    public void setPosition(Double x, Double y) {
+        /*if (x != null) {
+            shape.setLayoutX(x);
         }
-        return ret;
-    }
-
-    protected int getAbsolutePositionY() {
-        int ret = getPositionY();
-        if (parent != null) {
-            ret += ((AbstractElement)parent).getAbsolutePositionY();
-        }
-        return ret;
+        if (y != null) {
+            shape.setLayoutY(y);
+        }*/
+        shape.relocate(x, y);
     }
 
     @Override
-    public int getPositionX() {
-        return (int) shape.getLayoutX();
+    public double getPositionX() {
+        return shape.getLayoutX();
     }
 
     @Override
-    public void setPositionX(int x) {
-        shape.setLayoutX(x);
+    public double getPositionY() {
+        return shape.getLayoutY();
     }
 
-    @Override
-    public int getPositionY() {
-        return (int) shape.getLayoutY();
-    }
-
-    @Override
-    public void setPositionY(int y) {
-        shape.setLayoutY(y);
-    }
-
-    @Override
-    public void setPosition(double x, double y) {
-        shape.setLayoutX(x);
-        shape.setLayoutY(y);
-    }
 
     @Override
     public double getWidth() {
-        double w = shape.getWidth();
+        double w = shape.getBoundsInLocal().getWidth();
         log.debug("getWidth = "+ w);
         return w;
     }
 
     @Override
     public double getHeight() {
-        double h = shape.getHeight();
+        double h = shape.getBoundsInLocal().getHeight();
         log.debug("getHeight = "+ h);
         return h;
-    }
-
-    @Override
-    public Pane getShape() {
-        return shape;
     }
 
     @Override
@@ -105,4 +83,6 @@ public abstract class AbstractElement implements Element {
     public void hide() {
         shape.setVisible(false);
     }
+
+    abstract void drawInit();
 }

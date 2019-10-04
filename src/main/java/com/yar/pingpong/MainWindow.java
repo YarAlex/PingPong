@@ -34,9 +34,10 @@ public class MainWindow extends Application {
 
         Ball ball = new Ball(root);
         ball.draw();
-        ball.setPosition(platform.getPositionX()+platform.getWidth()/2, platform.getPositionY()-ball.getHeight()/2);
+        ball.setPosition(platform.getPositionX()+platform.getWidth()/2-ball.getWidth()/2, platform.getPositionY()-ball.getHeight()-.1);
 
-        RectangularWall rectangularWall = new RectangularWall(root, 10);
+
+        RectangularWall rectangularWall = new RectangularWall(root, 5);
         rectangularWall.draw();
         rectangularWall.moveToCenter();
 
