@@ -12,9 +12,11 @@ public class Ball extends AbstractElement {
 
     private Timeline timeline = new Timeline();
     private boolean onPlatform = true;
-    private double speed = .5;
+    private double speed = 2;
     private double directionX = 0;
     private double directionY = 1;
+    private double w;
+    private double h;
 
     public Ball(Element parent) {
         super(parent);
@@ -55,7 +57,9 @@ public class Ball extends AbstractElement {
     }
 
     public void continueFly() {
-        timeline.play();
+        if (timeline.getStatus().equals(Animation.Status.PAUSED)) {
+            timeline.play();
+        }
     }
 
     @Override
@@ -67,7 +71,19 @@ public class Ball extends AbstractElement {
                 12.0, 12.0,
                 12.0, 0.0);
         circle.setFill(Color.BLUE);
+        w = 12;
+        h = 12;
         shape.getChildren().addAll(circle);
+    }
+
+    @Override
+    public double getWidth() {
+        return w;
+    }
+
+    @Override
+    public double getHeight() {
+        return h;
     }
 
     public double getSpeed() {

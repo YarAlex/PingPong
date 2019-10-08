@@ -8,7 +8,9 @@ import javafx.scene.shape.Polygon;
 public class Platform extends AbstractElement {
 
     private Timeline timeline = new Timeline();
-    private double speed = 0.5;
+    private double speed = 0.250;
+    private double w;
+    private double h;
 
     public Platform(Element parent) {
         super(parent);
@@ -72,7 +74,19 @@ public class Platform extends AbstractElement {
                 50.0, 10.0,
                 50.0, 0.);
         polygon_1.setFill(Color.RED);
+        w = 50;
+        h = 10;
         shape.getChildren().addAll(polygon_1);
+    }
+
+    @Override
+    public double getWidth() {
+        return w;
+    }
+
+    @Override
+    public double getHeight() {
+        return h;
     }
 
     public Timeline getTimeline() {

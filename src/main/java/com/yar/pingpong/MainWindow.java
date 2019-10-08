@@ -1,9 +1,6 @@
 package com.yar.pingpong;
 
-import com.yar.pingpong.element.Ball;
-import com.yar.pingpong.element.Platform;
-import com.yar.pingpong.element.RectangularWall;
-import com.yar.pingpong.element.Root;
+import com.yar.pingpong.element.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -35,9 +32,9 @@ public class MainWindow extends Application {
         Ball ball = new Ball(root);
         ball.draw();
         ball.setPosition(platform.getPositionX()+platform.getWidth()/2-ball.getWidth()/2, platform.getPositionY()-ball.getHeight()-.1);
+        ball.getShape().autosize();
 
-
-        RectangularWall rectangularWall = new RectangularWall(root, 5);
+        RectangularWall rectangularWall = new RectangularWall(root, 10);
         rectangularWall.draw();
         rectangularWall.moveToCenter();
 
@@ -46,7 +43,11 @@ public class MainWindow extends Application {
         gameHandler.setPlatform(platform);
         gameHandler.setRoom(root);
         gameHandler.setWall(rectangularWall);
-
+        /*for (RoomWall.Type type : RoomWall.Type.values()) {
+            RoomWall wall = new RoomWall(root, type);
+            wall.draw();
+            gameHandler.getRoomWalls().add(wall);
+        }*/
         primaryStage.show();
     }
 

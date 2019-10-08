@@ -40,12 +40,6 @@ public abstract class AbstractElement implements Element {
 
     @Override
     public void setPosition(Double x, Double y) {
-        /*if (x != null) {
-            shape.setLayoutX(x);
-        }
-        if (y != null) {
-            shape.setLayoutY(y);
-        }*/
         shape.relocate(x, y);
     }
 
