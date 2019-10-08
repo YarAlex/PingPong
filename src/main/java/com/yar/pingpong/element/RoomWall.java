@@ -36,13 +36,6 @@ public class RoomWall extends AbstractElement{
         floor = true;
         double h = parent.getShape().getScene().getWindow().getHeight()-32;
         double w = parent.getShape().getScene().getWindow().getWidth();
-        /*Polygon polygon_1 = new Polygon();
-        polygon_1.getPoints().addAll(0.0, h,
-                0.0, h-1,
-                w, h-1,
-                w, h);
-        polygon_1.setFill(color);
-        shape.getChildren().addAll(polygon_1);*/
         drawTop();
         this.setPosition(0.0, h);
     }
@@ -62,13 +55,6 @@ public class RoomWall extends AbstractElement{
     private void drawRight() {
         double h = parent.getShape().getScene().getWindow().getHeight();
         double w = parent.getShape().getScene().getWindow().getWidth()-1;
-        /*Polygon polygon_1 = new Polygon();
-        polygon_1.getPoints().addAll(w, 0.0,
-                w-1, 0.0,
-                w-1, h,
-                w, h);
-        polygon_1.setFill(color);
-        shape.getChildren().addAll(polygon_1);*/
         drawLeft();
         this.setPosition(w,0.0);
     }

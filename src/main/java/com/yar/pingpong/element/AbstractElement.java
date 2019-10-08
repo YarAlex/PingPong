@@ -1,6 +1,5 @@
 package com.yar.pingpong.element;
 
-import javafx.geometry.Bounds;
 import javafx.scene.layout.Pane;
 import org.apache.log4j.Logger;
 
@@ -17,6 +16,18 @@ public abstract class AbstractElement implements Element {
         }
     }
 
+    public boolean intersects(Element element) {
+        double x = getPositionX();
+        double y = getPositionY();
+        double w = getWidth();
+        double h = getHeight();
+
+        return (x + w >= element.getPositionX() &&
+                y + h >= element.getPositionY() &&
+                x <= element.getPositionX()+element.getWidth() &&
+                y <= element.getPositionY()+element.getHeight());
+    }
+
     @Override
     public void draw() {
         log.debug("Start draw "+getClass().getSimpleName());
@@ -27,10 +38,6 @@ public abstract class AbstractElement implements Element {
     @Override
     public void addChild(Element child) {
         shape.getChildren().addAll(child.getShape());
-    }
-
-    public Bounds getBounds() {
-        return parent.getShape().localToParent(shape.getBoundsInParent());
     }
 
     @Override

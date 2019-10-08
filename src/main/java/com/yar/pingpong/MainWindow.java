@@ -43,11 +43,11 @@ public class MainWindow extends Application {
         gameHandler.setPlatform(platform);
         gameHandler.setRoom(root);
         gameHandler.setWall(rectangularWall);
-        /*for (RoomWall.Type type : RoomWall.Type.values()) {
+        for (RoomWall.Type type : RoomWall.Type.values()) {
             RoomWall wall = new RoomWall(root, type);
             wall.draw();
             gameHandler.getRoomWalls().add(wall);
-        }*/
+        }
         primaryStage.show();
     }
 

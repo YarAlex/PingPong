@@ -32,7 +32,7 @@ public class KeyHandler{
     }
 
     private void process (KeyEvent event) {
-        log.trace("Key = "+event.getCode()+", eventType = "+event.getEventType());
+        log.debug("Key = "+event.getCode()+", eventType = "+event.getEventType());
         for (KeyHandlerEvent keyHandlerEvent : events) {
             keyHandlerEvent.onKeyEvent(event);
         }
